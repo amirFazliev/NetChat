@@ -1,2 +1,5 @@
 .idea/
 pom.xml
+target/
+NetworkChat/target/
+ClientsChat/target/

@@ -14,7 +14,7 @@ public class Client {
 
     private int port;
 
-    private static File fileLoggerAllMessagesInClient = new File(String.format("ClientsChat/fileClient%d.log", countClient.getAndIncrement()));
+    private static File fileLoggerAllMessagesInClient = new File(String.format("ClientsChat/fileClient%d.log", countForClient()));
 
     private static Socket clientSocket;
 

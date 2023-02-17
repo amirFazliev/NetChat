@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainBasic {
-    static AtomicInteger countClient = new AtomicInteger(1);
+    static AtomicInteger countClient = new AtomicInteger(0);
 
     public static String messagePush(String name, String text) {
         return name + " [" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.mm.yyyy hh:mm:ss")) + "] " + text;
@@ -22,5 +22,10 @@ public class MainBasic {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static int countForClient () {
+        countClient.getAndIncrement();
+        return countClient.get();
     }
 }

@@ -11,7 +11,6 @@ public class MainNetwork {
     public static File portFile = new File("settings.txt");
     public static File fileLoggerAllMessagesInServer = new File("NetworkChat/FileServer.log");
 
-    public static Map<Socket, Server> serverMap = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
         try (FileOutputStream fos = new FileOutputStream(portFile)) {
@@ -24,19 +23,20 @@ public class MainNetwork {
 
         int port = Integer.parseInt(Objects.requireNonNull(numberPortAndHost(portFile, "port")));
         ServerSocket serverSocket = new ServerSocket(port);
+        Servers server = new Servers();
+
+        String textFirst = "Server started!\n";
+        System.out.printf(textFirst);
+        fileLoggerAllMessage(fileLoggerAllMessagesInServer, textFirst);
         try {
-            String textFirst = "Server started!\n";
-            System.out.printf(textFirst);
-            fileLoggerAllMessage(fileLoggerAllMessagesInServer, textFirst);
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                try {
-                    serverMap.put(clientSocket, new Server(clientSocket));
-                } finally {
-                    clientSocket.close();
-                }
+                ClientServer client = new ClientServer(clientSocket);
+                server.addClient(client);
+                client.setClient(client);
+                client.startClientServer();
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             serverSocket.close();
         }
     }

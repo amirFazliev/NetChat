@@ -1,11 +1,12 @@
 package org.example;
 
+
 import java.io.*;
 import java.net.Socket;
 
 import static org.example.MainBasic.*;
 
-public class Client {
+public class Client2 {
 
     protected static File fileLoggerAllMessagesInClient;
 
@@ -19,9 +20,9 @@ public class Client {
 
     private static BufferedReader inTerminalClient;
 
-    public Client(String clientNickname) {
+    public Client2(String clientNickname) {
         this.clientNickname = clientNickname;
-        fileLoggerAllMessagesInClient = getFileForClient("ClientsChat/");
+        fileLoggerAllMessagesInClient = getFileForClient("Client2/");
     }
 
     public static String getClientNickname() {

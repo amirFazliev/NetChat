@@ -4,12 +4,11 @@ import java.io.*;
 import java.util.Objects;
 import java.util.Scanner;
 
-import static org.example.Client.fileLoggerAllMessagesInClient;
-import static org.example.MainBasic.fileLoggerAllMessage;
-import static org.example.MainNetwork.numberPortAndHost;
-import static org.example.MainNetwork.portFile;
+import static org.example.Client2.fileLoggerAllMessagesInClient;
+import static org.example.MainBasic.*;
+import static org.example.MainNetwork.*;
 
-public class MainClient {
+public class MainClient2 {
 
 
     public static void main(String[] args) throws IOException {
@@ -18,7 +17,7 @@ public class MainClient {
         System.out.printf(textFirst);
 
         String nameClient = new Scanner(System.in).nextLine();
-        Client client = new Client(nameClient);
+        Client2 client = new Client2(nameClient);
 
         fileLoggerAllMessage(fileLoggerAllMessagesInClient, textFirst);
 

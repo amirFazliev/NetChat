@@ -14,24 +14,39 @@ public class Servers {
 
     private static final List<ClientServer> serverList = new LinkedList<>();
 
-    private static final Map<PrintWriter, BufferedReader> mapWriteAndRead = new HashMap<>();
+    private static final List<PrintWriter> printWriterList = new LinkedList<>();
 
     public static List<ClientServer> getServerList() {
         return serverList;
     }
 
-    public static Map<PrintWriter, BufferedReader> getMapWriteAndRead() {
-        return mapWriteAndRead;
+    public static List<PrintWriter> getPrintWriterList() {
+        return printWriterList;
     }
 
     public void addClient(ClientServer clientServer) {
         serverList.add(clientServer);
-        mapWriteAndRead.put(clientServer.getOutput(), clientServer.getInput());
-    }
+        printWriterList.add(clientServer.getOutput());
+     }
 
     public static void sendMessageClient(String text) throws IOException {
-        for (PrintWriter printWriter : getMapWriteAndRead().keySet()) {
-            printWriter.println(text);
+        for (PrintWriter pw : printWriterList) {
+            pw.println(text);
         }
+    }
+
+    public static void sendMessageFromClientForOtherClients(String text, List<PrintWriter> list) {
+        for (PrintWriter pw : list) {
+            pw.println(text);
+        }
+    }
+
+    public static List<PrintWriter> listForSendMessage (PrintWriter pw) {
+        List<PrintWriter> list = new LinkedList<>();
+        for (PrintWriter printWriter : printWriterList) {
+            list.add(printWriter);
+        }
+        list.remove(pw);
+        return list;
     }
 }

@@ -11,7 +11,6 @@ public class MainNetwork {
     public static File portFile = new File("settings.txt");
     public static File fileLoggerAllMessagesInServer = new File("NetworkChat/FileServer.log");
 
-
     public static void main(String[] args) throws IOException {
         try (FileOutputStream fos = new FileOutputStream(portFile)) {
             byte[] bytes = ("host: 127.0.0.1\n" +

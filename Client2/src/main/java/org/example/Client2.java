@@ -3,6 +3,7 @@ package org.example;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 import static org.example.MainBasic.*;
 
@@ -18,7 +19,6 @@ public class Client2 {
 
     private static BufferedReader in;
 
-    private static BufferedReader inTerminalClient;
 
     public Client2(String clientNickname) {
         this.clientNickname = clientNickname;
@@ -34,7 +34,6 @@ public class Client2 {
             clientSocket = new Socket(host, port);
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream())), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            inTerminalClient = new BufferedReader(new InputStreamReader(System.in));
             new InputThread().start();
             new OutputThread().start();
         } catch (IOException e) {
@@ -67,25 +66,18 @@ public class Client2 {
         @Override
         public void run() {
             while (true)
-                try {
-                    String question = inTerminalClient.readLine();
-                    String text = messagePush(getClientNickname(), question);
-                    out.println(text);
-                    fileLoggerAllMessage(fileLoggerAllMessagesInClient, text);
-                    if (question.equals("/exit")) {
-                        String texts = String.format("Client %s is disconnected\n", clientNickname);
-                        System.out.printf(texts);
-                        fileLoggerAllMessage(fileLoggerAllMessagesInClient, texts);
-                        break;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    try {
-                        closedBuffer();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+            {
+                String question = new Scanner(System.in).nextLine();
+                String text = messagePush(getClientNickname(), question);
+                out.println(text);
+                fileLoggerAllMessage(fileLoggerAllMessagesInClient, text);
+                if (question.equals("/exit")) {
+                    String texts = String.format("Client %s is disconnected\n", clientNickname);
+                    System.out.printf(texts);
+                    fileLoggerAllMessage(fileLoggerAllMessagesInClient, texts);
+                    break;
                 }
+            }
             try {
                 closedBuffer();
             } catch (IOException ignored) {
@@ -99,7 +91,6 @@ public class Client2 {
                 clientSocket.close();
                 out.close();
                 in.close();
-                inTerminalClient.close();
             }
         } catch (IOException ignored) {
         }

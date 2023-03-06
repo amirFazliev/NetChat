@@ -11,7 +11,6 @@ import static org.example.MainNetwork.portFile;
 
 public class MainClient {
 
-
     public static void main(String[] args) throws IOException {
 
         String textFirst ="Write your name, before start to message in Server\n";
